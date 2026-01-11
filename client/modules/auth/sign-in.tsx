@@ -1,16 +1,14 @@
 import {Button, Stack, TextField} from '@mui/material';
-import {useNavigate} from '@tanstack/react-router';
+import {useRouter} from '@tanstack/react-router';
 import {toast} from 'sonner';
-import {signInRoute} from '@/modules/auth/auth.routes';
 import {getAPIClient} from '@/providers/api-client';
 import {setSession} from '@/providers/auth/session';
 import {notifyError} from '@/utils/notify';
 
-const api_client = getAPIClient();
+const api = getAPIClient();
 
 export default function SignIn() {
-  const {redirect_to} = signInRoute.useSearch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -19,15 +17,12 @@ export default function SignIn() {
       const formData = new FormData(form);
       const email = formData.get('email')?.toString()!;
       const password = formData.get('password')?.toString()!;
-      const {session} = await api_client.auth.signIn({
-        email,
-        password,
-      });
+      const {session} = await api.auth.signIn({email, password});
       setSession(session);
       toast.success('Signed in successfully');
-      await navigate({to: redirect_to || '/'});
+      router.invalidate();
     } catch (error) {
-      notifyError(error, 'Failed to sign in.');
+      notifyError(['auth'], error, 'Failed to sign in.');
     }
   };
 

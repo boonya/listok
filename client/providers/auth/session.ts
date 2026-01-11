@@ -1,4 +1,5 @@
 import type {Session as SupabaseSession} from '@supabase/supabase-js';
+import {useMemo} from 'react';
 import {useLocalStorage} from 'usehooks-ts';
 import z from 'zod';
 import {logger} from '@/utils/logger';
@@ -50,7 +51,11 @@ const deserializeSession = (value: string | null | undefined) => {
     if (!object) return null;
     return SessionSchema.parse(object);
   } catch (error) {
-    logger.error('Failed to get session from storage.', error);
+    logger.error(
+      ['storage', 'auth'],
+      'Failed to get session from storage.',
+      error,
+    );
     return null;
   }
 };
@@ -60,7 +65,11 @@ const serializeSession = (session: Session | null | undefined) => {
     const value = SessionSchema.parse(session);
     return JSON.stringify(value);
   } catch (error) {
-    logger.error('Failed to put session into a storage.', error);
+    logger.error(
+      ['storage', 'auth'],
+      'Failed to put session into a storage.',
+      error,
+    );
   }
   return '';
 };
@@ -71,13 +80,10 @@ export function useSession() {
     serializer: serializeSession,
   });
 
-  return [
-    session,
-    {
-      set,
-      remove,
-    },
-  ] as const;
+  return useMemo(
+    () => [session, {set, remove}] as const,
+    [session, set, remove],
+  );
 }
 
 export const getSession = (): Session | null => {
@@ -94,7 +100,11 @@ export const setSession = <S extends Session>(
      */
     window.dispatchEvent(new StorageEvent('local-storage', {key: STORAGE_KEY}));
   } catch (error) {
-    logger.error('Failed to put session into a storage.', error);
+    logger.error(
+      ['storage', 'auth'],
+      'Failed to put session into a storage.',
+      error,
+    );
   }
 };
 
@@ -106,7 +116,11 @@ export const removeSession = () => {
      */
     window.dispatchEvent(new StorageEvent('local-storage', {key: STORAGE_KEY}));
   } catch (error) {
-    logger.error('Failed to remove session from storage.', error);
+    logger.error(
+      ['storage', 'auth'],
+      'Failed to remove session from storage.',
+      error,
+    );
   }
 };
 

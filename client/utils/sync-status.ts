@@ -1,22 +1,18 @@
 import {useEffect, useState} from 'react';
-import {useSyncManager} from './sync-manager';
-
-// import { SyncInfo } from '@/providers/sync/worker';
+import {syncManagerWorker} from '@/providers/sync';
 
 type OnChange = (isSyncing: boolean) => unknown;
 
 export function useSyncStatusEvents(onChange: OnChange) {
-  const syncManager = useSyncManager();
-
   useEffect(() => {
     const controller = new AbortController();
 
-    syncManager.addEventListener(
+    // TODO: Make truly type-safe messages
+    syncManagerWorker.addEventListener(
       'message',
-      ({data} /** : MessageEvent<SyncInfo>  */) => {
-        if (data.scope === 'sync' && data.type === 'info') {
-          onChange(data.isSyncing);
-        }
+      (event) => {
+        if (event.data.scope !== 'sync') return;
+        onChange(event.data.isRunning);
       },
       {signal: controller.signal},
     );
@@ -24,7 +20,7 @@ export function useSyncStatusEvents(onChange: OnChange) {
     return () => {
       controller.abort();
     };
-  }, [onChange, syncManager.addEventListener]);
+  }, [onChange]);
 }
 
 export function useSyncStatus(onChange?: OnChange) {

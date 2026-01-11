@@ -16,8 +16,8 @@ type Props = {
 
 export default function AppHeader({title}: Props) {
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar position="static" color="transparent" elevation={0}>
+      <Toolbar sx={{gap: 1}}>
         <Box sx={{flexGrow: 1}}>
           <TypographyLink variant="h6" color="inherit" to="/">
             {title || 'Home'}

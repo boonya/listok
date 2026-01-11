@@ -1,33 +1,38 @@
+import * as Comlink from 'comlink';
 import {useEffect} from 'react';
-import {getSession, isSessionExpired} from '@/providers/auth/session';
+import {isSessionExpired, useSession} from '@/providers/auth/session';
 import {notifyError} from '@/utils/notify';
-import {useOnlineStatusEvents} from '@/utils/online-status';
-import {useSyncManager} from '@/utils/sync-manager';
+import {useOnlineStatus} from '@/utils/online-status';
+import type {SyncManager} from './worker';
+import SyncManagerWorker from './worker?worker';
+
+export const syncManagerWorker = new SyncManagerWorker();
+export const syncManager = Comlink.wrap<SyncManager>(syncManagerWorker);
 
 export default function SyncProvider() {
-  const syncManager = useSyncManager();
+  const [session] = useSession();
+  const isOnline = useOnlineStatus();
 
-  useOnlineStatusEvents((isOnline) => {
-    console.log('isOnline', isOnline);
-    syncManager.postMessage({isOnline});
-    if (isOnline) {
-      const session = getSession();
-      if (!session) return;
-      if (isSessionExpired(session)) return;
-      syncManager.postMessage({
-        action: 'sync',
-        access_token: session.access_token,
-      });
+  useEffect(() => {
+    if (isOnline && session && !isSessionExpired(session)) {
+      syncManager.resume(session.access_token);
+    } else {
+      syncManager.suppress();
     }
-  });
+  }, [isOnline, session]);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    syncManager.addEventListener(
+    // TODO: Make truly type-safe messages
+    syncManagerWorker.addEventListener(
       'error',
       (error) => {
-        notifyError(error, 'Помилка обробника синхронізації.');
+        notifyError(
+          ['worker', 'sync'],
+          error,
+          'Помилка обробника синхронізації.',
+        );
       },
       {signal: controller.signal},
     );
@@ -35,7 +40,7 @@ export default function SyncProvider() {
     return () => {
       controller.abort();
     };
-  }, [syncManager.addEventListener]);
+  }, []);
 
   return null;
 }
