@@ -5,8 +5,7 @@ on:
   workflow_call:
 
 jobs:
-  testing:
-    name: Testing 🧪
+  client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,4 +13,13 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - run: npm ci --workspace tests --workspace msw --include-workspace-root
-      - run: npm run test
+      - run: npm run test:client
+  server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+      - run: npm ci --workspace tests --workspace msw --include-workspace-root
+      - run: npm run test:server

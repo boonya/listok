@@ -24,43 +24,10 @@ md:
           - "**/*.md"
           - "**/*.mdx"
 
-eslint:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "eslint/**"
-          - "**/.eslintrc.js"
-
 "d.ts":
   - changed-files:
       - any-glob-to-any-file:
           - "**/*.d.ts"
-
-app:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "app/**"
-
-api:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "api/**"
-
-public:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "public/**"
-
-locales:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "public/locales/**"
-
-styles:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "postcss.config.js"
-          - "tailwind.config.ts"
-          - "**/*.css"
 
 stories:
   - changed-files:
