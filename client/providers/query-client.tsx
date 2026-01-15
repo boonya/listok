@@ -1,5 +1,6 @@
+import {ORPCError, ORPCErrorCode} from '@orpc/client';
 import {createAsyncStoragePersister} from '@tanstack/query-async-storage-persister';
-import {QueryClient} from '@tanstack/react-query';
+import {MutationCache, QueryCache, QueryClient} from '@tanstack/react-query';
 import {
   type AsyncStorage,
   PersistQueryClientProvider,
@@ -19,6 +20,14 @@ const persister = createAsyncStoragePersister({
   deserialize,
 });
 
+export const isFailedResponse = <TCode extends ORPCErrorCode, TData>(
+  value: unknown,
+): value is Response | ORPCError<TCode, TData> => {
+  if (value instanceof Response) return true;
+  if (value instanceof ORPCError) return true;
+  return false;
+};
+
 /**
  * Create query retry policy.
  *
@@ -33,11 +42,23 @@ export const queryRetryPolicy =
     // if (!(error instanceof RestApiResponseError)) {
     //   return false;
     // }
-    if (error.cause instanceof Response && error.cause.status < 500) {
+    if (isFailedResponse(error.cause) && error.cause.status < 500) {
       return false;
     }
     return failureCount < retries;
   };
+
+const queryCache = new QueryCache({
+  onError: (error) => {
+    console.error('queryCache:', error);
+  },
+});
+
+const mutationCache = new MutationCache({
+  onError: (error) => {
+    console.error('mutationCache:', error);
+  },
+});
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +76,8 @@ export const queryClient = new QueryClient({
       // networkMode: 'offlineFirst',
     },
   },
+  queryCache,
+  mutationCache,
 });
 
 export function QueryClientProvider({
@@ -72,7 +95,7 @@ export function QueryClientProvider({
 //   api: ApiClient;
 // }
 
-type QueryKey = ['me' | 'listing', ...(readonly unknown[])];
+type QueryKey = ['refresh-session' | 'me' | 'listing', ...(readonly unknown[])];
 
 declare module '@tanstack/react-query' {
   interface Register {

@@ -1,4 +1,3 @@
-import {ORPCError} from '@orpc/client';
 import {QueryClient} from '@tanstack/react-query';
 import {createRoute, redirect, useRouter} from '@tanstack/react-router';
 import {useCallback} from 'react';
@@ -6,6 +5,7 @@ import z from 'zod';
 import {useApiClient} from '@/providers/api/api-client';
 import {queryMe} from '@/providers/api/me';
 import {getSession, removeSession} from '@/providers/auth/session';
+import {isFailedResponse} from '@/providers/query-client';
 import rootRoute from '@/providers/router/root.route';
 import SignIn from './sign-in';
 import SignUp from './sign-up';
@@ -40,7 +40,7 @@ export const authOnlyRoute = async (
     })
     .catch((error) => {
       if (
-        (error instanceof Response || error instanceof ORPCError) &&
+        isFailedResponse(error) &&
         error.status >= 400 &&
         error.status < 500
       ) {
@@ -71,10 +71,7 @@ export const nonAuthOnlyRoute = async (queryClient: QueryClient) => {
       }
     })
     .catch((error) => {
-      if (
-        (error instanceof Response || error instanceof ORPCError) &&
-        error.status !== 403
-      ) {
+      if (isFailedResponse(error) && error.status !== 403) {
         throw redirectTo();
       } else {
         removeSession();
