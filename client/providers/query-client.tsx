@@ -30,7 +30,6 @@ const persister = createAsyncStoragePersister({
 export const queryRetryPolicy =
   (retries = 3) =>
   (failureCount: number, error: Error) => {
-    console.log('error:', {failureCount, error}, error);
     // if (!(error instanceof RestApiResponseError)) {
     //   return false;
     // }
