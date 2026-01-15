@@ -1,5 +1,10 @@
-import {queryOptions, useQuery} from '@tanstack/react-query';
-import {useLayoutEffect, useMemo} from 'react';
+import {
+  keepPreviousData,
+  queryOptions,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+import {useEffect, useMemo} from 'react';
 import {useLocalStorage} from 'usehooks-ts';
 import {z} from 'zod';
 import {getAPIClient} from '@/providers/api/api-client';
@@ -134,47 +139,16 @@ export const isSessionExpired = (session: Session | null) => {
   return new Date(expires_at * 1000) < new Date();
 };
 
-export function SessionProvider() {
-  const [session] = useSession();
-
-  const enabled = !!session;
-  const initialDataUpdatedAt = session ? session.issued_at * 1000 : undefined;
-  const refetchInterval = session ? session.ttl * 1000 : undefined;
-
-  useQuery(
-    queryOptions({
-      queryKey: ['refresh-session'],
-      queryFn: async () => {
-        const api = getAPIClient(session);
-        const new_session = await api.auth.refresh_session({
-          refresh_token: session!.refresh_token,
-        });
-        logger.debug(
-          ['auth'],
-          `New session retreived at ${new Date().toLocaleTimeString()}.`,
-          new_session,
-        );
-        setSession(new_session);
-        return new_session;
-      },
-      enabled,
-      initialData: session,
-      initialDataUpdatedAt,
-      staleTime: refetchInterval,
-      refetchInterval,
-    }),
-  );
-
-  useLayoutEffect(() => {
-    console.log(`session provider at ${new Date().toLocaleTimeString()}`, {
-      'session issued_at':
-        session?.issued_at &&
-        new Date(session.issued_at * 1000).toLocaleString(),
-      'session expires_at':
-        session?.expires_at &&
-        new Date(session.expires_at * 1000).toLocaleString(),
-    });
-  }, [session?.issued_at, session?.expires_at]);
-
-  return null;
-}
+export const queryRefreshSession = (session: Session) => {
+  return queryOptions({
+    queryKey: ['refresh-session'],
+    queryFn: async () => {
+      const api = getAPIClient(session);
+      return api.auth.refresh_session(session);
+    },
+    placeholderData: keepPreviousData,
+    initialData: session,
+    staleTime: session.ttl * 1000,
+    initialDataUpdatedAt: session.issued_at * 1000,
+  });
+};

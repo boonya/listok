@@ -1,11 +1,56 @@
-import type {OrpcClient} from '@listock/server/router';
-import {createORPCClient} from '@orpc/client';
+import type {OrpcClient as ApiClient} from '@listock/server/router';
+import {
+  createORPCClient,
+  ORPCError,
+  ORPCErrorCode,
+  onError,
+} from '@orpc/client';
 import {RPCLink} from '@orpc/client/fetch';
 import pkg from '@/package.json';
 import {useSession} from '@/providers/auth/session';
 import {logger} from '@/utils/logger';
 
-export type {OrpcClient as ApiClient};
+export type {ApiClient};
+
+export const getAPIClient = (session?: Session | null): ApiClient => {
+  const link = new RPCLink({
+    url: API_URL,
+    headers: {
+      authorization: getAuthorizationHeader(session),
+      'x-api-client-name': pkg.name,
+      'x-api-client-version': pkg.version,
+      'x-api-client-revision': REVISION,
+    },
+    interceptors: [
+      onError((error) => {
+        if (!isResponseError(error) || error.status >= 500) {
+          logger.error(['network', 'api'], 'API request failed.', error);
+        }
+      }),
+    ],
+  });
+
+  return createORPCClient(link);
+};
+
+export const isResponseError = <TCode extends ORPCErrorCode, TData>(
+  value: unknown,
+): value is Response | ORPCError<TCode, TData> => {
+  if (value instanceof Response && value.status >= 400) {
+    return true;
+  }
+
+  if (value instanceof ORPCError) {
+    return true;
+  }
+
+  return false;
+};
+
+export function useApiClient(): ApiClient {
+  const [session] = useSession();
+  return getAPIClient(session);
+}
 
 type Session = {
   token_type?: string;
@@ -17,27 +62,3 @@ const getAuthorizationHeader = (session?: Session | null) => {
   const {token_type, access_token} = session;
   return [token_type, access_token].filter(Boolean).join(' ');
 };
-
-export const getAPIClient = (session?: Session | null): OrpcClient => {
-  const link = new RPCLink({
-    url: API_URL,
-    headers: {
-      authorization: getAuthorizationHeader(session),
-      'x-api-client-name': pkg.name,
-      'x-api-client-version': pkg.version,
-      'x-api-client-revision': REVISION,
-    },
-    // // fetch: <-- provide fetch polyfill fetch if needed
-    // interceptors: [
-    //   onError((error) => {
-    //     logger.error(['network'], 'API client error.', error);
-    //   }),
-    // ],
-  });
-  return createORPCClient(link);
-};
-
-export function useApiClient(): OrpcClient {
-  const [session] = useSession();
-  return getAPIClient(session);
-}

@@ -1,12 +1,11 @@
-import {ORPCError, ORPCErrorCode} from '@orpc/client';
 import {createAsyncStoragePersister} from '@tanstack/query-async-storage-persister';
-import {MutationCache, QueryCache, QueryClient} from '@tanstack/react-query';
+import {QueryClient} from '@tanstack/react-query';
 import {
   type AsyncStorage,
   PersistQueryClientProvider,
 } from '@tanstack/react-query-persist-client';
 import {PropsWithChildren} from 'react';
-import {type ApiClient, getAPIClient} from '@/providers/api/api-client';
+import {isResponseError} from '@/providers/api/api-client';
 
 const storageKey = 'REACT_QUERY_OFFLINE_CACHE';
 const storage: AsyncStorage = window.localStorage;
@@ -20,14 +19,6 @@ const persister = createAsyncStoragePersister({
   deserialize,
 });
 
-export const isFailedResponse = <TCode extends ORPCErrorCode, TData>(
-  value: unknown,
-): value is Response | ORPCError<TCode, TData> => {
-  if (value instanceof Response) return true;
-  if (value instanceof ORPCError) return true;
-  return false;
-};
-
 /**
  * Create query retry policy.
  *
@@ -39,26 +30,15 @@ export const isFailedResponse = <TCode extends ORPCErrorCode, TData>(
 export const queryRetryPolicy =
   (retries = 3) =>
   (failureCount: number, error: Error) => {
+    console.log('error:', {failureCount, error}, error);
     // if (!(error instanceof RestApiResponseError)) {
     //   return false;
     // }
-    if (isFailedResponse(error.cause) && error.cause.status < 500) {
+    if (isResponseError(error) && error.status < 500) {
       return false;
     }
     return failureCount < retries;
   };
-
-const queryCache = new QueryCache({
-  onError: (error) => {
-    console.error('queryCache:', error);
-  },
-});
-
-const mutationCache = new MutationCache({
-  onError: (error) => {
-    console.error('mutationCache:', error);
-  },
-});
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -76,8 +56,6 @@ export const queryClient = new QueryClient({
       // networkMode: 'offlineFirst',
     },
   },
-  queryCache,
-  mutationCache,
 });
 
 export function QueryClientProvider({

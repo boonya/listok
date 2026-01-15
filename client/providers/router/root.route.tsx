@@ -5,7 +5,6 @@ import {ErrorBoundary} from 'react-error-boundary';
 import AppHeader from '@/components/app-header';
 import GeneralErrorMessage from '@/components/errors/general-message';
 import Progressbar from '@/components/progressbar';
-import {SessionProvider} from '@/providers/auth/session';
 import {QueryClientProvider} from '@/providers/query-client';
 import TanStackDevtools from '@/providers/tanstack-devtools';
 
@@ -18,7 +17,6 @@ function RootLayout() {
         <QueryClientProvider client={queryClient}>
           <AppHeader />
           <Outlet />
-          <SessionProvider />
           <TanStackDevtools />
         </QueryClientProvider>
       </Suspense>
