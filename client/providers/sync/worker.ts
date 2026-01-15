@@ -11,12 +11,17 @@ export type SyncMessageEvent = MessageEvent<{
   isRunning: boolean;
 }>;
 
+type Session = {
+  token_type?: string;
+  access_token: string;
+};
+
 // @ts-expect-error Ok so far
 class SyncManager {
   private db;
   private api?: ApiClient;
   private isRunning = false;
-  private access_token?: string;
+  private session?: Session;
 
   public constructor() {
     logger.debug(['worker', 'init', 'sync'], 'Init sync manager.');
@@ -44,9 +49,9 @@ class SyncManager {
     });
   }
 
-  public async resume(access_token: string) {
-    this.access_token = access_token;
-    this.api = getAPIClient(this.access_token);
+  public async resume(session: Session) {
+    this.session = session;
+    this.api = getAPIClient(this.session);
 
     if (this.isRunning) return;
     logger.debug(['worker', 'sync'], 'Resume sync operations.', this);
@@ -59,7 +64,7 @@ class SyncManager {
 
   public async syncLists(lists: List[]) {
     logger.debug(['worker', 'sync'], 'Sync lists init.', {lists}, this);
-    if (!this.access_token || !this.api) {
+    if (!this.session || !this.api) {
       logger.debug(['worker', 'sync'], 'API token missed. Sync skipped.', this);
       return;
     }

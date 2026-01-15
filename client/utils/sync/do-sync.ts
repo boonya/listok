@@ -1,8 +1,13 @@
 import {getAPIClient} from '@/providers/api/api-client';
 import {getDBInstance} from '@/providers/storage/data-db';
 
-export default async (access_token: string) => {
-  const api = getAPIClient(access_token);
+type Session = {
+  token_type?: string;
+  access_token: string;
+};
+
+export default async (session: Session) => {
+  const api = getAPIClient(session);
   const db = getDBInstance();
 
   const local = await db.lists.toArray();

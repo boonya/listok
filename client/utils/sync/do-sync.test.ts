@@ -38,16 +38,16 @@ beforeEach(() => {
   vi.mocked(getAPIClient).mockReturnValue({lists: {sync: syncToServer}});
 });
 
-const ACCESS_TOKEN = Date.now().toString(36);
+const SESSION = {token_type: 'Bearer', access_token: Date.now().toString(36)};
 
 test('should pass an access token to the API client instance.', async () => {
-  await doSync(ACCESS_TOKEN);
+  await doSync(SESSION);
 
-  expect(getAPIClient).toHaveBeenCalledWith(ACCESS_TOKEN);
+  expect(getAPIClient).toHaveBeenCalledWith(SESSION);
 });
 
 test('should execute subsequent functions.', async () => {
-  await doSync(ACCESS_TOKEN);
+  await doSync(SESSION);
 
   expect(getDBInstance).toBeCalledTimes(1);
   expect(getAPIClient).toBeCalledTimes(1);
@@ -72,7 +72,7 @@ test.for([
   // @ts-expect-error Mocking
   vi.mocked(syncToServer).mockResolvedValue(SERVER_DATASET);
 
-  await doSync(ACCESS_TOKEN);
+  await doSync(SESSION);
 
   expect(remove.mock.calls[0]).toMatchSnapshot('remove');
   expect(create.mock.calls[0]).toMatchSnapshot('create');

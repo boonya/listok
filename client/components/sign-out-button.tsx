@@ -1,13 +1,11 @@
 import {Button} from '@mui/material';
-import {useSuspenseQuery} from '@tanstack/react-query';
 import {useTransition} from 'react';
-import {queryMe, useSignOut} from '@/modules/auth/auth.routes';
+import {useSignOut} from '@/modules/auth/auth.routes';
 import {useSession} from '@/providers/auth/session';
 import {notifyError} from '@/utils/notify';
 
 export default function SignOutButton() {
   const [session] = useSession();
-  // const {data: me} = useSuspenseQuery(queryMe(session));
 
   const signOut = useSignOut({scope: 'local'});
 

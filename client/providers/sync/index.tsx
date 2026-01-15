@@ -15,7 +15,7 @@ export default function SyncProvider() {
 
   useEffect(() => {
     if (isOnline && session && !isSessionExpired(session)) {
-      syncManager.resume(session.access_token);
+      syncManager.resume(session);
     } else {
       syncManager.suppress();
     }
