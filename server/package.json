@@ -18,6 +18,7 @@
     "tsx": "^4.21.0"
   },
   "peerDependencies": {
-    "@listock/supabase": "*"
+    "@listock/supabase": "*",
+    "@listock/tests": "*"
   }
 }
