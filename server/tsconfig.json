@@ -6,8 +6,6 @@
       "@/*": ["./*"]
     },
     "outDir": "build",
-    "moduleResolution": "bundler",
-    "module": "esnext",
     "target": "es2023",
     "lib": ["es2024"]
   }

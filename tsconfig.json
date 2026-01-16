@@ -8,7 +8,12 @@
     "isolatedModules": true,
     /** Strictness */
     "strict": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    /** *** */
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "sourceMap": true,
+    "noEmit": true
   },
   "exclude": ["*.test.tsx?"]
 }

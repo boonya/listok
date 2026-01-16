@@ -6,8 +6,6 @@
       "@/*": ["./*"]
     },
     "outDir": "build",
-    "moduleResolution": "bundler",
-    "module": "ESNext",
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
     "jsx": "react-jsx",

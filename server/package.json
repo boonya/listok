@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --clear-screen=false --env-file=.env.local ./index.ts",
-    "build": "tsc",
+    "build": "tsc --noEmit false",
     "types": "tsc --noEmit",
     "test": "vitest --config ./vitest.config.ts"
   },
