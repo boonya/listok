@@ -1,7 +1,7 @@
 import useSafeContext from '@boonya.dev/react-utils/hooks/useSafeContext';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
-import {type CellContext} from '@tanstack/react-table';
+import type {CellContext} from '@tanstack/react-table';
 import {withCellBoundary} from '@/components/list-items/columns/cell-boundary';
 import {type Item, TableContext} from '@/components/list-items/context';
 

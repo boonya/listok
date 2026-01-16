@@ -1,10 +1,5 @@
-import {
-  keepPreviousData,
-  queryOptions,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-import {useEffect, useMemo} from 'react';
+import {keepPreviousData, queryOptions} from '@tanstack/react-query';
+import {useMemo} from 'react';
 import {useLocalStorage} from 'usehooks-ts';
 import {z} from 'zod';
 import {getAPIClient} from '@/providers/api/api-client';

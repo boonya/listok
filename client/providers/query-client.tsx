@@ -4,7 +4,7 @@ import {
   type AsyncStorage,
   PersistQueryClientProvider,
 } from '@tanstack/react-query-persist-client';
-import {type PropsWithChildren} from 'react';
+import type {PropsWithChildren} from 'react';
 import {isResponseError} from '@/providers/api/api-client';
 
 const storageKey = 'REACT_QUERY_OFFLINE_CACHE';

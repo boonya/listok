@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck // FIXME: I'll fix it in a bit
 
-import {ColumnDef, createColumnHelper} from '@tanstack/react-table';
-import {Item} from '@/components/list-items/context';
+import {type ColumnDef, createColumnHelper} from '@tanstack/react-table';
+import type {Item} from '@/components/list-items/context';
 import ActionsCell from './actions';
 import DateCell from './date';
 import PriceCell from './price';

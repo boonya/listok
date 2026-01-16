@@ -1,4 +1,4 @@
-import {type QueryClient} from '@tanstack/react-query';
+import type {QueryClient} from '@tanstack/react-query';
 import {createRootRouteWithContext, Outlet} from '@tanstack/react-router';
 import {Suspense} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';

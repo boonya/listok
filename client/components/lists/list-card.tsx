@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import {createLink} from '@tanstack/react-router';
-import React from 'react';
+import type React from 'react';
 
 export type Props = {
   id: number;

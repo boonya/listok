@@ -1,10 +1,10 @@
 import ReorderIcon from '@mui/icons-material/Reorder';
 import IconButton from '@mui/material/IconButton';
-import {type CellContext} from '@tanstack/react-table';
+import type {CellContext} from '@tanstack/react-table';
 import type {DragControls} from 'framer-motion';
-import {type PointerEvent} from 'react';
+import type {PointerEvent} from 'react';
 import {withCellBoundary} from '@/components/list-items/columns/cell-boundary';
-import {type Item} from '@/components/list-items/context';
+import type {Item} from '@/components/list-items/context';
 
 type Props = CellContext<Item, never> & {
   controls: DragControls;

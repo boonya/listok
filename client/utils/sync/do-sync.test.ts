@@ -16,7 +16,7 @@ type SyncToServer = typeof api.lists.sync;
 const getLocal = vi.fn<() => Promise<List[]>>(async () => []);
 const remove = vi.fn(async () => void 0);
 const create = vi.fn(async () => void 0);
-const transaction = vi.fn(async (mode, table, scope) => {
+const transaction = vi.fn(async (_mode, _table, scope) => {
   await scope();
 });
 const syncToServer = vi.fn<SyncToServer>(async () => []);

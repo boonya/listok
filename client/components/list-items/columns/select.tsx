@@ -1,6 +1,6 @@
 import useSafeContext from '@boonya.dev/react-utils/hooks/useSafeContext';
 import {Checkbox} from '@mui/material';
-import {type CellContext} from '@tanstack/react-table';
+import type {CellContext} from '@tanstack/react-table';
 import {withCellBoundary} from '@/components/list-items/columns/cell-boundary';
 import {type Item, TableContext} from '@/components/list-items/context';
 
@@ -10,7 +10,7 @@ export default withCellBoundary(function Select({row}: Props) {
   const {update} = useSafeContext(TableContext).options.meta ?? {};
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    _e: React.ChangeEvent<HTMLInputElement>,
     checked: boolean,
   ) => {
     void update?.(row.id, {is_completed: checked});

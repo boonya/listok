@@ -6,7 +6,16 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!client/dev-dist",
+      "!**/build",
+      "!**/coverage",
+      "!msw/public/mockServiceWorker.js",
+      "!**/storybook-static",
+      "!supabase/database.d.ts"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -19,22 +28,12 @@
     "bracketSameLine": false,
     "bracketSpacing": true,
     "expand": "auto",
-    "useEditorconfig": true,
-    "includes": [
-      "**",
-      "!**/node_modules/**",
-      "!client/dev-dist/**",
-      "!**/build/**",
-      "!**/coverage/**",
-      "!msw/public/mockServiceWorker.js",
-      "!**/storybook-static/**",
-      "!supabase/database.d.ts"
-    ]
+    "useEditorconfig": true
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
+      "recommended": true,
       "complexity": {
         "noUselessTypeConstraint": "error"
       },
@@ -57,18 +56,12 @@
         "noMisleadingInstantiator": "error",
         "noUnsafeDeclarationMerging": "error",
         "useNamespaceKeyword": "error"
+      },
+      "a11y": {
+        "useHtmlLang": "error",
+        "noHeaderScope": "error"
       }
-    },
-    "includes": [
-      "**",
-      "!**/node_modules/**",
-      "!client/dev-dist/**",
-      "!**/build/**",
-      "!**/coverage/**",
-      "!msw/public/mockServiceWorker.js",
-      "!**/storybook-static/**",
-      "!supabase/database.d.ts"
-    ]
+    }
   },
   "javascript": {
     "formatter": {

@@ -22,6 +22,14 @@ export default defineConfig(({mode}) => {
       REVISION: JSON.stringify(REVISION),
       API_URL: JSON.stringify(API_URL),
     },
+    resolve: {
+      alias: {
+        '@/': import.meta.resolve('.'),
+      },
+    },
+    build: {
+      outDir: 'build',
+    },
     server: {
       open: true,
       port: DEVSERVER_PORT,

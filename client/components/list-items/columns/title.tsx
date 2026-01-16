@@ -1,6 +1,6 @@
 import useSafeContext from '@boonya.dev/react-utils/hooks/useSafeContext';
 import {Input} from '@mui/material';
-import {type CellContext} from '@tanstack/react-table';
+import type {CellContext} from '@tanstack/react-table';
 import {useState} from 'react';
 import {type Item, TableContext} from '@/components/list-items/context';
 import {withCellBoundary} from './cell-boundary';

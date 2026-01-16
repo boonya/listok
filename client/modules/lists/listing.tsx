@@ -1,8 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
-import {Box, Button, Stack} from '@mui/material';
+import {Box, Button} from '@mui/material';
 import {useLiveQuery} from 'dexie-react-hooks';
 import ListCard from '@/components/lists/list-card';
-import MasonryContainer from '@/components/lists/masonry-container';
 import {getListsStorage} from '@/providers/storage/lists';
 import {notifyError} from '@/utils/notify';
 

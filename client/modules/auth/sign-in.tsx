@@ -15,8 +15,8 @@ export default function SignIn() {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
-      const email = formData.get('email')?.toString()!;
-      const password = formData.get('password')?.toString()!;
+      const email = formData.get('email')?.toString() ?? '';
+      const password = formData.get('password')?.toString() ?? '';
       const {session} = await api.auth.sign_in({email, password});
       setSession(session);
       toast.success('Signed in successfully');

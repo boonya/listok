@@ -1,4 +1,4 @@
-import {QueryClient} from '@tanstack/react-query';
+import type {QueryClient} from '@tanstack/react-query';
 import {createRoute, redirect, useRouter} from '@tanstack/react-router';
 import {useCallback} from 'react';
 import z from 'zod';
