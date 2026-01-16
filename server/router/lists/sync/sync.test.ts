@@ -34,8 +34,8 @@ const DatasetSchema = z
 
 test.for([
   ['empty', []],
-  ['001', DATASET_001],
-  ['002', DATASET_002],
+  ['001', DATASET_001], // 0 create, 1 update, 2 remove
+  ['002', DATASET_002], // 1 create, 1 update, 2 remove
 ] as const)('%s', async ([, dataset]) => {
   const result = await sync(db, DatasetSchema.parse(dataset));
 

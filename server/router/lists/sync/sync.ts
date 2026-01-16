@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: It's okay */
 interface Input {
   id: string | null;
   title: string;
