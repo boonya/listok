@@ -1,43 +1,48 @@
+import z from 'zod';
 import type {SupabaseClient} from '@/supabase-client';
 
-interface Remove {
-  id: string;
-  deleted_at: Date;
-}
+const RemoveInput = z.object({
+  id: z.uuid(),
+  deleted_at: z.date().transform((v) => v.toISOString()),
+});
 
-async function remove(supabase: SupabaseClient, items: Remove[]) {
-  // @ts-expect-error Just ignore it so far
+type Remove = z.input<typeof RemoveInput>;
+
+async function remove(supabase: SupabaseClient, input: Remove[]) {
+  const items = RemoveInput.array().parse(input);
   await supabase.rpc('delete_outdated_lists', {items});
 }
 
-interface Update {
-  id: string;
-  title: string;
-  created_at: Date;
-  updated_at: Date | null;
-}
+const UpdateInput = z.object({
+  id: z.uuid(),
+  title: z.string(),
+  created_at: z.date().transform((v) => v.toISOString()),
+  updated_at: z
+    .date()
+    .nullable()
+    .transform((v) => v?.toISOString() ?? null),
+});
+
+type Update = z.input<typeof UpdateInput>;
 
 async function update(supabase: SupabaseClient, input: Update[]) {
-  const payload = input.map(({created_at, updated_at, ...rest}) => ({
-    created_at: created_at.toISOString(),
-    updated_at: updated_at?.toISOString() ?? null,
-    ...rest,
-  }));
+  const payload = UpdateInput.array().parse(input);
   await supabase.from('lists').upsert(payload);
 }
 
-interface Create {
-  title: string;
-  created_at: Date;
-  updated_at: Date | null;
-}
+const CreateInput = z.object({
+  title: z.string(),
+  created_at: z.date().transform((v) => v.toISOString()),
+  updated_at: z
+    .date()
+    .nullable()
+    .transform((v) => v?.toISOString() ?? null),
+});
+
+type Create = z.input<typeof CreateInput>;
 
 async function create(supabase: SupabaseClient, input: Create[]) {
-  const payload = input.map(({created_at, updated_at, ...rest}) => ({
-    created_at: created_at.toISOString(),
-    updated_at: updated_at?.toISOString() ?? null,
-    ...rest,
-  }));
+  const payload = CreateInput.array().parse(input);
   await supabase.from('lists').insert(payload);
 }
 
