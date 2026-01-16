@@ -17,7 +17,7 @@ export default function SignIn() {
       const formData = new FormData(form);
       const email = formData.get('email')?.toString() ?? '';
       const password = formData.get('password')?.toString() ?? '';
-      const {session} = await api.auth.sign_in({email, password});
+      const {session} = await api.user.sign_in({email, password});
       setSession(session);
       toast.success('Signed in successfully');
       router.invalidate();

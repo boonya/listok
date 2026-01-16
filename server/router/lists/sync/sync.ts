@@ -34,7 +34,7 @@ type Db = {
   >;
 };
 
-export async function sync(db: Db, input: Input) {
+export default async function sync(db: Db, input: Input) {
   const remove = input
     .filter(({id, deleted_at}) => id && deleted_at)
     .map(({id, deleted_at}) => ({

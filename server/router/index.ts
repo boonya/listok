@@ -1,9 +1,9 @@
 import type {RouterClient} from '@orpc/server';
-import auth from '@/auth';
-import lists from '@/lists';
+import lists from './lists';
+import user from './user';
 
 export const router = {
-  auth,
+  user,
   lists,
 };
 
