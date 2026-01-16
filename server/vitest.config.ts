@@ -7,7 +7,6 @@ const config = defineConfig({
     },
   },
   test: {
-    root: '../',
     /**
      * @link https://vitest.dev/api/mock#mockreset
      */

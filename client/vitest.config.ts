@@ -1,13 +1,16 @@
 import {defineConfig} from 'vitest/config';
 
 const config = defineConfig({
+  define: {
+    REVISION: JSON.stringify('vitest'),
+    API_URL: JSON.stringify('http://api-server/'),
+  },
   resolve: {
     alias: {
       '@/': import.meta.resolve('.'),
     },
   },
   test: {
-    root: '../',
     /**
      * @link https://vitest.dev/api/mock#mockreset
      */
