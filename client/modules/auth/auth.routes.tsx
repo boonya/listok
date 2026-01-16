@@ -9,7 +9,7 @@ import {
   isSessionExpired,
   queryRefreshSession,
   removeSession,
-  Session,
+  type Session,
   setSession,
 } from '@/providers/auth/session';
 import rootRoute from '@/providers/router/root.route';

@@ -8,7 +8,7 @@ import {
   ListItem as MuiListItem,
 } from '@mui/material';
 import {Reorder} from 'framer-motion';
-import {HTMLAttributes} from 'react';
+import type {HTMLAttributes} from 'react';
 import {TableContext, withTableProvider} from './context';
 import ListItem from './list-item';
 

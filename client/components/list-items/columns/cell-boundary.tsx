@@ -1,7 +1,7 @@
 import ErrorIcon from '@mui/icons-material/Error';
 import {IconButton, Tooltip} from '@mui/material';
-import {PropsWithChildren} from 'react';
-import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
+import {type PropsWithChildren} from 'react';
+import {ErrorBoundary, type FallbackProps} from 'react-error-boundary';
 
 function FallbackComponent({error, resetErrorBoundary}: FallbackProps) {
   const message =

@@ -1,7 +1,7 @@
 import {ORPCError, os} from '@orpc/server';
 import {z} from 'zod';
-import createSupabaseClient, {supabaseMiddleware} from '@/supabase-client';
-import {ORPCContext} from '@/types';
+import createSupabaseClient, {supabaseMiddleware} from './supabase-client';
+import {type ORPCContext} from './types';
 
 const UserSchema = z.object({
   id: z.uuid(),

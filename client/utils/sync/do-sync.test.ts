@@ -1,6 +1,6 @@
 import {beforeEach, expect, test, vi} from 'vitest';
 import {getAPIClient} from '@/providers/api/api-client';
-import {getDBInstance, List} from '@/providers/storage/data-db';
+import {getDBInstance, type List} from '@/providers/storage/data-db';
 import LOCAL_001 from './__data__/001.local';
 import SERVER_001 from './__data__/001.server';
 import LOCAL_002 from './__data__/002.local';

@@ -1,7 +1,7 @@
 import {ORPCError, os} from '@orpc/server';
 import {z} from 'zod';
 import {supabaseMiddleware} from '@/supabase-client';
-import {ORPCContext} from '@/types';
+import type {ORPCContext} from '@/types';
 import {getDbApi} from './db-api';
 import {sync as processSync} from './sync';
 

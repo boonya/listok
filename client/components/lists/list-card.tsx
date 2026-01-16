@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Card,
   CardActionArea,
-  CardActionAreaProps,
+  type CardActionAreaProps,
   CardContent,
   IconButton,
   List,

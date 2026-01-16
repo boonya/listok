@@ -2,7 +2,7 @@ import type {OrpcClient as ApiClient} from '@listock/server/router';
 import {
   createORPCClient,
   ORPCError,
-  ORPCErrorCode,
+  type ORPCErrorCode,
   onError,
 } from '@orpc/client';
 import {RPCLink} from '@orpc/client/fetch';

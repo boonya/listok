@@ -1,9 +1,9 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   styled,
   Typography,
-  TypographyProps,
+  type TypographyProps,
 } from '@mui/material';
 
 const Root = styled(Box)(({theme}) => ({

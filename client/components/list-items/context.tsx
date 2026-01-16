@@ -1,11 +1,11 @@
 import {
   getCoreRowModel,
-  RowData,
-  RowSelectionState,
-  Table,
+  type RowData,
+  type RowSelectionState,
+  type Table,
   useReactTable,
 } from '@tanstack/react-table';
-import {createContext, PropsWithChildren, useState} from 'react';
+import {createContext, type PropsWithChildren, useState} from 'react';
 import {columns} from './columns';
 
 export interface Item {

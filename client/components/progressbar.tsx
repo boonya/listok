@@ -1,8 +1,8 @@
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   CircularProgress,
-  CircularProgressProps,
+  type CircularProgressProps,
   styled,
 } from '@mui/material';
 

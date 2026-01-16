@@ -1,7 +1,7 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography, {TypographyProps} from '@mui/material/Typography';
+import Typography, {type TypographyProps} from '@mui/material/Typography';
 import {createLink} from '@tanstack/react-router';
 import SignOutButton from './sign-out-button';
 import SyncStatusIndicator from './sync-status';

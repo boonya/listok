@@ -1,5 +1,6 @@
 import {ListItem as MuiListItem} from '@mui/material';
-import {flexRender, Row} from '@tanstack/react-table';
+import type {Row} from '@tanstack/react-table';
+import {flexRender} from '@tanstack/react-table';
 import {Reorder, useDragControls} from 'framer-motion';
 import {Fragment} from 'react';
 import type {Item} from './context';
