@@ -11,6 +11,7 @@ const config = defineConfig({
     },
   },
   test: {
+    globalSetup: '../tests/globals.ts',
     /**
      * @link https://vitest.dev/api/mock#mockreset
      */

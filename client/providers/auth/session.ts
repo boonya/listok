@@ -139,7 +139,7 @@ export const queryRefreshSession = (session: Session) => {
     queryKey: ['refresh-session'],
     queryFn: async () => {
       const api = getAPIClient(session);
-      return api.auth.refresh_session(session);
+      return api.user.refresh_session(session);
     },
     placeholderData: keepPreviousData,
     initialData: session,

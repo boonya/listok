@@ -1,6 +1,6 @@
 {
   "name": "@listock/msw",
   "dependencies": {
-    "msw": "^2.11.2"
+    "msw": "^2.12.7"
   }
 }

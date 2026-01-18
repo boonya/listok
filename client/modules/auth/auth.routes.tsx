@@ -98,10 +98,10 @@ export function useSignOut(params?: {scope: 'local' | 'global' | 'others'}) {
   const api = useApiClient();
 
   return useCallback(async () => {
-    await api.auth.sign_out(params);
+    await api.user.sign_out(params);
     removeSession();
     router.invalidate();
-  }, [api.auth.sign_out, router.invalidate, params]);
+  }, [api.user.sign_out, router.invalidate, params]);
 }
 
 export const signInRoute = createRoute({

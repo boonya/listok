@@ -33,6 +33,7 @@ declare module '@tanstack/react-table' {
   interface TableMeta<TData extends RowData = Item> extends DataGridActions {}
 }
 
+// biome-ignore lint/style/noNonNullAssertion: This what we need
 export const TableContext = createContext<Table<Item>>(undefined!);
 
 export function TableProvider({

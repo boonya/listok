@@ -1,0 +1,99 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`001 > create 1`] = `
+[
+  [],
+]
+`;
+
+exports[`001 > remove 1`] = `
+[
+  [
+    {
+      "deleted_at": 2025-12-15T20:32:20.000Z,
+      "id": "2fc62eff-bd8b-5ea0-88b7-2caf766d97ca",
+    },
+    {
+      "deleted_at": 2025-12-15T20:30:45.000Z,
+      "id": "c9a4e0bc-ab18-5231-babf-41b6b128aff2",
+    },
+  ],
+]
+`;
+
+exports[`001 > select 1`] = `[]`;
+
+exports[`001 > update 1`] = `
+[
+  [
+    {
+      "created_at": 2025-12-14T20:32:20.000Z,
+      "id": "67ccec48-8096-55bf-ad3e-a8cca7e2a42b",
+      "title": "B",
+      "updated_at": 2025-12-14T14:21:10.000Z,
+    },
+  ],
+]
+`;
+
+exports[`002 > create 1`] = `
+[
+  [
+    {
+      "created_at": 2025-12-14T20:32:20.000Z,
+      "title": "D",
+      "updated_at": null,
+    },
+  ],
+]
+`;
+
+exports[`002 > remove 1`] = `
+[
+  [
+    {
+      "deleted_at": 2025-12-15T20:32:20.000Z,
+      "id": "2fc62eff-bd8b-5ea0-88b7-2caf766d97ca",
+    },
+    {
+      "deleted_at": 2025-12-15T20:30:45.000Z,
+      "id": "c9a4e0bc-ab18-5231-babf-41b6b128aff2",
+    },
+  ],
+]
+`;
+
+exports[`002 > select 1`] = `[]`;
+
+exports[`002 > update 1`] = `
+[
+  [
+    {
+      "created_at": 2025-12-14T20:32:20.000Z,
+      "id": "67ccec48-8096-55bf-ad3e-a8cca7e2a42b",
+      "title": "B",
+      "updated_at": 2025-12-14T14:21:10.000Z,
+    },
+  ],
+]
+`;
+
+exports[`empty > create 1`] = `
+[
+  [],
+]
+`;
+
+exports[`empty > remove 1`] = `
+[
+  [],
+]
+`;
+
+exports[`empty > select 1`] = `[]`;
+
+exports[`empty > update 1`] = `
+[
+  [],
+]
+`;

@@ -7,7 +7,7 @@ export const queryMe = (session: Session) =>
     queryKey: ['me'],
     queryFn: () => {
       const api = getAPIClient(session);
-      return api.auth.me();
+      return api.user.me();
     },
     placeholderData: keepPreviousData,
     staleTime: session.ttl * 1000 - (Date.now() - session.issued_at * 1000),

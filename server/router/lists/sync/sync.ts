@@ -1,40 +1,41 @@
-type Input = {
+/** biome-ignore-all lint/style/noNonNullAssertion: It's okay */
+interface Input {
   id: string | null;
   title: string;
   // items: z.object({}).loose().array().nullish(),
   created_at: Date;
   updated_at: Date | null;
   deleted_at: Date | null;
-}[];
+}
 
-type Remove = {
+interface Remove {
   id: string;
   deleted_at: Date;
-}[];
+}
 
-type Create = {
+interface Create {
   title: string;
   created_at: Date;
   updated_at: Date | null;
-}[];
+}
 
-type Update = {
+interface Update {
   id: string;
   title: string;
   created_at: Date;
   updated_at: Date | null;
-}[];
+}
 
-type Db = {
-  remove: (input: Remove) => Promise<void>;
-  create: (input: Create) => Promise<void>;
-  update: (input: Update) => Promise<void>;
+interface Db {
+  remove: (input: Remove[]) => Promise<void>;
+  create: (input: Create[]) => Promise<void>;
+  update: (input: Update[]) => Promise<void>;
   select: () => Promise<
     {id: string; title: string; created_at: Date; updated_at: Date | null}[]
   >;
-};
+}
 
-export async function sync(db: Db, input: Input) {
+export default async function sync(db: Db, input: Input[]) {
   const remove = input
     .filter(({id, deleted_at}) => id && deleted_at)
     .map(({id, deleted_at}) => ({

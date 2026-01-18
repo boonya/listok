@@ -13,6 +13,6 @@
     "backup:schema:linked": "supabase db dump --linked --file supabase/linked-schema.$(date +\"%Y%m%d%H%M%S\").backup.sql"
   },
   "dependencies": {
-    "supabase": "^2.72.4"
+    "supabase": "^2.72.8"
   }
 }
