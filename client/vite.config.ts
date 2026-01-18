@@ -5,8 +5,12 @@ import {defineConfig, loadEnv} from 'vite';
 import {VitePWA} from 'vite-plugin-pwa';
 import tsConfigPaths from 'vite-tsconfig-paths';
 import z from 'zod';
+import {background_color, theme_color} from './providers/theme/theme';
 
 const EnvSchema = z.object({
+  APP_LANG: z.string().length(2),
+  NAME: z.string().min(3),
+  DESCRIPTION: z.string().min(10),
   REVISION: z.string().min(1),
   API_URL: z.url(),
   DEVSERVER_HOSTNAME: z.string().default('localhost'),
@@ -14,8 +18,16 @@ const EnvSchema = z.object({
 });
 
 export default defineConfig(({mode}) => {
-  const {REVISION, API_URL, DEVSERVER_PORT, DEVSERVER_HOSTNAME} =
-    EnvSchema.parse(loadEnv(mode, process.cwd(), ''));
+  const env = loadEnv(mode, process.cwd(), '');
+  const {
+    APP_LANG,
+    NAME,
+    DESCRIPTION,
+    REVISION,
+    API_URL,
+    DEVSERVER_PORT,
+    DEVSERVER_HOSTNAME,
+  } = EnvSchema.parse(env);
 
   return {
     define: {
@@ -41,6 +53,15 @@ export default defineConfig(({mode}) => {
       host: DEVSERVER_HOSTNAME,
     },
     plugins: [
+      {
+        name: 'transform-index.html',
+        transformIndexHtml(html) {
+          return html.replace(
+            /<title>(.*?)<\/title>/,
+            `<title>${NAME}</title>`,
+          );
+        },
+      },
       tsConfigPaths(),
       react(),
       VitePWA({
@@ -78,12 +99,12 @@ export default defineConfig(({mode}) => {
           ],
         },
         manifest: {
-          lang: 'uk',
-          name: 'Списки', // 👈 Use package.json, README.md or something like that
-          short_name: 'listock', // 👈 Use package.json, README.md or something like that
-          description: 'Менеджер списків', // 👈 Use package.json, README.md or something like that
-          theme_color: '#ffffff', // 👈 Use MUI theme defined values
-          background_color: '#ffffff', // 👈 Use MUI theme defined values
+          lang: APP_LANG,
+          name: NAME,
+          short_name: NAME,
+          description: DESCRIPTION,
+          theme_color,
+          background_color,
           display: 'standalone',
           icons: [
             {
