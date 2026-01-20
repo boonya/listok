@@ -28,4 +28,20 @@ const theme = createTheme({
   // },
 });
 
+export type AppTheme = typeof theme;
+
+if (typeof window !== 'undefined' && !('__APP_THEME' in window)) {
+  Object.defineProperty(window, '__APP_THEME', {
+    configurable: false,
+    writable: false,
+    value: theme,
+  });
+}
+
+declare global {
+  interface Window {
+    __APP_THEME: AppTheme;
+  }
+}
+
 export default theme;

@@ -12,9 +12,9 @@ const EnvSchema = z.object({
   NAME: z.string().min(3),
   DESCRIPTION: z.string().min(10),
   REVISION: z.string().min(1),
-  API_URL: z.url(),
-  DEVSERVER_HOSTNAME: z.string().default('localhost'),
-  DEVSERVER_PORT: z.coerce.number().min(1024).max(65_535).default(31_234),
+  API_URL: z.url(), // TODO: Runtime only
+  DEVSERVER_HOSTNAME: z.string().default('localhost'), // TODO: Runtime only
+  DEVSERVER_PORT: z.coerce.number().min(1024).max(65_535).default(31_234), // TODO: Runtime only
 });
 
 export default defineConfig(({mode}) => {

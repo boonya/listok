@@ -1,5 +1,6 @@
 set check_function_bodies = off;
 
+-- Delete only items that updated before they marked as deleted.
 CREATE OR REPLACE FUNCTION public.delete_outdated_lists(items jsonb)
  RETURNS void
  LANGUAGE sql
