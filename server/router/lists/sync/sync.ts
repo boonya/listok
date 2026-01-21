@@ -34,6 +34,7 @@ type List = {
   title: string;
   created_at: Date;
   updated_at: Date | null;
+  order: number | null;
 };
 
 function getCreated(input: Input[], synced: List[]) {
@@ -85,6 +86,7 @@ interface Input {
   created_at: Date;
   updated_at: Date | null;
   deleted_at: Date | null;
+  order: number | null;
 }
 
 interface Remove {
@@ -96,6 +98,7 @@ interface Create {
   title: string;
   created_at: Date;
   updated_at: Date | null;
+  order: number | null;
 }
 
 interface Update {
@@ -103,13 +106,12 @@ interface Update {
   title: string;
   created_at: Date;
   updated_at: Date | null;
+  order: number | null;
 }
 
 interface Db {
   remove: (input: Remove[]) => Promise<void>;
   create: (input: Create[]) => Promise<void>;
   update: (input: Update[]) => Promise<void>;
-  select: () => Promise<
-    {id: string; title: string; created_at: Date; updated_at: Date | null}[]
-  >;
+  select: () => Promise<List[]>;
 }

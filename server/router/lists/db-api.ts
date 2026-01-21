@@ -24,6 +24,7 @@ const UpdateInput = z.object({
     .date()
     .nullable()
     .transform((v) => v?.toISOString() ?? null),
+  order: z.number().nullable(),
 });
 
 type Update = z.input<typeof UpdateInput>;
@@ -40,6 +41,7 @@ const CreateInput = z.object({
     .date()
     .nullable()
     .transform((v) => v?.toISOString() ?? null),
+  order: z.number().nullable(),
 });
 
 type Create = z.input<typeof CreateInput>;
@@ -52,7 +54,7 @@ async function create(supabase: SupabaseClient, input: Create[]) {
 async function select(supabase: SupabaseClient) {
   const {data} = await supabase
     .from('lists')
-    .select('id, title, created_at, updated_at')
+    .select('id, title, created_at, updated_at, order')
     .order('created_at', {ascending: false})
     // .order('order', {
     //   referencedTable: 'items',

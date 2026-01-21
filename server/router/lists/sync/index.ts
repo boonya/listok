@@ -16,7 +16,7 @@ export default os
         updated_at: z.date().nullish().default(null),
         deleted_at: z.date().nullish().default(null),
         title: z.string(),
-        // order: z.number().nullish().default(null),
+        order: z.number().nullish().default(null),
         // items: z.object({}).loose().array().nullish(),
       })
       .array(),

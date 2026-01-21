@@ -40,17 +40,19 @@ export default function ListOfListsScreen() {
       </Button>
       <Box sx={{display: 'inline-flex', gap: 2, flexWrap: 'wrap'}}>
         {/* <MasonryContainer> */}
-        {lists.map(({id, title /**, items */}) => (
+        {lists.map(({id, title, created_at, order /**, items */}) => (
           <ListCard
             key={id}
             id={id}
             title={title}
+            created_at={created_at}
+            order={order}
             items={[] /** items */}
             onRemove={removeList}
           />
         ))}
+        {/* </MasonryContainer> */}
       </Box>
-      {/* </MasonryContainer> */}
     </Box>
   );
 }
