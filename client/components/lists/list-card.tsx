@@ -17,7 +17,7 @@ export type Props = {
   id: ID;
   title: string;
   created_at: Date;
-  order: number | null;
+  order: number | null | undefined;
   items: {
     id: string;
     title: string;
