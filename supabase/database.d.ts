@@ -111,12 +111,36 @@ export type Database = {
     }
     Functions: {
       delete_outdated_lists: { Args: { items: Json }; Returns: undefined }
+      lists_push: {
+        Args: { items: Database["public"]["CompositeTypes"]["list_pushed"][] }
+        Returns: Database["public"]["CompositeTypes"]["list_synced"][]
+        SetofOptions: {
+          from: "*"
+          to: "list_synced"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
     }
     Enums: {
       [_ in never]: never
     }
     CompositeTypes: {
-      [_ in never]: never
+      list_pushed: {
+        id: string | null
+        title: string | null
+        order: number | null
+        created_at: string | null
+        updated_at: string | null
+        deleted_at: string | null
+      }
+      list_synced: {
+        id: string | null
+        title: string | null
+        order: number | null
+        created_at: string | null
+        updated_at: string | null
+      }
     }
   }
 }

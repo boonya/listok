@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: <explanation> */
 import {createRoot} from 'react-dom/client';
 import App from '@/react-app';
 import {logger} from '@/utils/logger';
