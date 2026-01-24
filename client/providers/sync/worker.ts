@@ -5,22 +5,9 @@ import {type ApiClient, getAPIClient} from '@/providers/api/api-client';
 import {getDBInstance, type List} from '@/providers/storage/data-db';
 import {logger} from '@/utils/logger';
 
-// TODO: Implement truly type-safe message event
-export type SyncMessageEvent = MessageEvent<{
-  scope: 'sync';
-  isRunning: boolean;
-}>;
-
-type Session = {
-  token_type?: string;
-  access_token: string;
-};
-
-// @ts-expect-error Ok so far
-class SyncManager {
+export class SyncManager {
   private db;
   private subscriptions?: Subscription[];
-  private isRunning = false;
 
   public constructor() {
     logger.debug(['worker', 'init', 'sync'], 'Init sync manager.');
@@ -30,7 +17,7 @@ class SyncManager {
     logger.debug(['worker', 'init', 'sync'], 'Sync manager has initialized.');
   }
 
-  public async run(session: Session) {
+  public async run(session: {access_token: string; token_type?: string}) {
     logger.debug(['worker', 'sync'], 'Run sync.', this);
 
     const api = getAPIClient(session);
@@ -50,6 +37,10 @@ class SyncManager {
     }
 
     logger.debug(['worker', 'sync'], 'Sync suppressed.', this);
+  }
+
+  private is_running(value: boolean) {
+    self.postMessage({scope: 'sync', isRunning: value});
   }
 
   private async observe_lists(api: ApiClient) {
@@ -75,10 +66,9 @@ class SyncManager {
 
   private async sync_lists(api: ApiClient, local: List[]) {
     try {
-      this.isRunning = true;
-      self.postMessage({scope: 'sync', isRunning: this.isRunning});
-
       logger.debug(['worker', 'sync'], 'Sync lists started.', local, this);
+
+      this.is_running(true);
 
       const remote = await api.lists.push(local);
       const {removed, created, updated} = this.diff_changes(local, remote);
@@ -101,8 +91,7 @@ class SyncManager {
       logger.error(['worker', 'sync'], 'Sync lists failed.', error);
       throw error;
     } finally {
-      this.isRunning = false;
-      self.postMessage({scope: 'sync', isRunning: this.isRunning});
+      this.is_running(false);
     }
   }
 
@@ -132,7 +121,4 @@ class SyncManager {
   }
 }
 
-const manager = new SyncManager();
-// @ts-expect-error Ok so far
-export type SyncManager = typeof manager;
-Comlink.expose(manager);
+Comlink.expose(new SyncManager(), self);
