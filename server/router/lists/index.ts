@@ -1,4 +1,4 @@
 import listing from './listing';
-import sync from './sync';
+import push from './push';
 
-export default {listing, sync};
+export default {listing, push};

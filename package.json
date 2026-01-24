@@ -33,9 +33,9 @@
     "test:client": "npm run test -w client",
     "test:server": "npm run test -w server",
     "verify": "concurrently -c auto npm:check npm:test npm:types",
-    "gen:types": "npm run gen:types -w supabase",
-    "db:reset": "npm run db:reset -w supabase",
-    "db:diff": "npm run db:diff -w supabase"
+    "db:types": "npm run types -w supabase",
+    "db:reset": "npm run reset -w supabase",
+    "db:diff": "npm run diff -w supabase"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",

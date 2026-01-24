@@ -25,7 +25,7 @@ const routeTree = rootRoute.addChildren([
   listsRoutes,
 ]);
 
-export const router = createRouter({
+const router = createRouter({
   routeTree,
   defaultPendingComponent: () => <Progressbar />,
   defaultErrorComponent: () => <GeneralError />,

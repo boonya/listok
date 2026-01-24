@@ -2,7 +2,7 @@
   "name": "@listock/supabase",
   "scripts": {
     "dev": "source .env.local && supabase start",
-    "gen:types": "supabase gen types typescript --local > database.d.ts",
+    "types": "supabase gen types typescript --local > database.d.ts",
     "reset": "supabase db reset",
     "diff": "PGSSLMODE=disable supabase db diff -f",
     "migration:up": "supabase migration up",

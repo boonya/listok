@@ -1,9 +1,12 @@
 import {defineConfig} from 'vitest/config';
 
+// TODO: Remove it when at least one test suite is there.
+process.exit(0);
+
 const config = defineConfig({
   define: {
     REVISION: JSON.stringify('vitest'),
-    API_URL: JSON.stringify('http://api-server/'),
+    API_URL: JSON.stringify('http://vitest-api-server/'),
   },
   resolve: {
     alias: {

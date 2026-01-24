@@ -14,22 +14,31 @@ import {createLink} from '@tanstack/react-router';
 import type React from 'react';
 
 export type Props = {
-  id: number;
+  id: ID;
   title: string;
+  created_at: Date;
+  order: number | null | undefined;
   items: {
     id: string;
     title: string;
     price: number | null;
     currency: string;
   }[];
-  onRemove: (id: number) => unknown;
+  onRemove: (id: ID) => unknown;
 };
 
 const CardActionAreaLink = createLink((props: CardActionAreaProps) => (
   <CardActionArea {...props} />
 ));
 
-export default function ListCard({id, title, items, onRemove}: Props) {
+export default function ListCard({
+  id,
+  title,
+  items,
+  created_at,
+  order,
+  onRemove,
+}: Props) {
   const handleRemove = (e: React.SyntheticEvent) => {
     e.preventDefault();
     onRemove(id);
@@ -44,6 +53,8 @@ export default function ListCard({id, title, items, onRemove}: Props) {
               {title}
             </Typography>
           )}
+          <p>created_at: {created_at.toLocaleString()}</p>
+          <p>order: {order}</p>
           <IconButton
             aria-label="Видалити"
             title="Видалити"

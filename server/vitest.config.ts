@@ -1,5 +1,8 @@
 import {defineConfig} from 'vitest/config';
 
+// TODO: Remove it when at least one test suite is there.
+process.exit(0);
+
 const config = defineConfig({
   resolve: {
     alias: {

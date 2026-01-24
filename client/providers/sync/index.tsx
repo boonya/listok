@@ -1,46 +1,54 @@
 import * as Comlink from 'comlink';
-import {useEffect} from 'react';
-import {isSessionExpired, useSession} from '@/providers/auth/session';
+import {useCallback, useDeferredValue, useEffect, useMemo} from 'react';
+import {
+  getSession,
+  isSessionExpired,
+  useSession,
+} from '@/providers/auth/session';
+import type {SyncManager} from '@/providers/sync/worker';
+import SyncWorker from '@/providers/sync/worker?worker';
 import {notifyError} from '@/utils/notify';
 import {useOnlineStatus} from '@/utils/online-status';
-import type {SyncManager} from './worker';
-import SyncManagerWorker from './worker?worker';
 
-export const syncManagerWorker = new SyncManagerWorker();
-export const syncManager = Comlink.wrap<SyncManager>(syncManagerWorker);
+export const syncManagerWorker = new SyncWorker();
 
 export default function SyncProvider() {
-  const [session] = useSession();
   const isOnline = useOnlineStatus();
+  const [session] = useSession();
 
-  useEffect(() => {
-    if (isOnline && session && !isSessionExpired(session)) {
-      syncManager.resume(session);
-    } else {
-      syncManager.suppress();
-    }
-  }, [isOnline, session]);
+  const isSyncAllowed = useDeferredValue(
+    isOnline && !isSessionExpired(session),
+  );
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    // TODO: Make truly type-safe messages
-    syncManagerWorker.addEventListener(
-      'error',
-      (error) => {
-        notifyError(
-          ['worker', 'sync'],
-          error,
-          'Помилка обробника синхронізації.',
-        );
-      },
-      {signal: controller.signal},
-    );
-
-    return () => {
-      controller.abort();
-    };
+  const syncManager = useMemo(() => {
+    return Comlink.wrap<SyncManager>(syncManagerWorker);
   }, []);
+
+  const run = useCallback(async () => {
+    try {
+      const session = getSession();
+      if (!session) throw new Error('No session.');
+      await syncManager.run(session);
+    } catch (error) {
+      notifyError(['worker', 'sync'], error, 'Помилка воркера синхронізації.');
+    }
+  }, [syncManager]);
+
+  const suppress = useCallback(async () => {
+    try {
+      await syncManager.suppress();
+    } catch (error) {
+      notifyError(['worker', 'sync'], error, 'Помилка воркера синхронізації.');
+    }
+  }, [syncManager]);
+
+  useEffect(() => {
+    if (isSyncAllowed) {
+      void run();
+    } else {
+      void suppress();
+    }
+  }, [isSyncAllowed, run, suppress]);
 
   return null;
 }

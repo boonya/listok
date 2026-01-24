@@ -1,3 +1,4 @@
+import {throttle} from '@tanstack/react-pacer';
 import {useEffect, useState} from 'react';
 import {syncManagerWorker} from '@/providers/sync';
 
@@ -7,12 +8,18 @@ export function useSyncStatusEvents(onChange: OnChange) {
   useEffect(() => {
     const controller = new AbortController();
 
+    const throttledHandler = throttle(onChange, {
+      wait: 500,
+      leading: false,
+      trailing: true,
+    });
+
     // TODO: Make truly type-safe messages
     syncManagerWorker.addEventListener(
       'message',
       (event) => {
         if (event.data.scope !== 'sync') return;
-        onChange(event.data.isRunning);
+        throttledHandler(event.data.isRunning);
       },
       {signal: controller.signal},
     );
