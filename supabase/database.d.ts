@@ -113,7 +113,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      delete_outdated_lists: { Args: { items: Json }; Returns: undefined }
       lists_push: {
         Args: { items: Database["public"]["CompositeTypes"]["list_pushed"][] }
         Returns: Database["public"]["CompositeTypes"]["list_synced"][]
