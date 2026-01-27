@@ -35,8 +35,8 @@ export function getListsStorage() {
   const create = async (title = '') => {
     await db.lists.add({
       created_at: new Date(),
-      // FIXME: Remove fallback once debugging is done
-      title: title || new Date().toISOString().split('T')[1],
+      version: 1,
+      title,
     });
   };
 

@@ -9,6 +9,10 @@ const InputSchema = z.object({
     .or(z.number().transform((_) => null))
     .nullish()
     .default(null),
+  version: z
+    .number()
+    .nullish()
+    .transform((v) => (v ? Number(v) : 1)),
   title: z.string(),
   order: z.number().nullish().default(null),
   created_at: z.date().transform((v) => v.toISOString()),
@@ -26,6 +30,7 @@ const InputSchema = z.object({
 
 const ResultSchema = z.object({
   id: z.uuid(),
+  version: z.number(),
   title: z.string(),
   order: z.number().nullish().default(null),
   created_at: z.string().transform((v) => new Date(v)),
@@ -34,6 +39,9 @@ const ResultSchema = z.object({
     .nullish()
     .transform((v) => (v ? new Date(v) : null)),
 });
+
+type NullableProps<T> = {[K in keyof T]: T[K] | null};
+type RpcData = NullableProps<z.input<typeof ResultSchema>>[];
 
 export default os
   .$context<ORPCContext>()
@@ -44,8 +52,7 @@ export default os
       const {data} = await context.supabase
         .rpc('lists_push', {items: input})
         .throwOnError();
-
-      return ResultSchema.array().parse(data);
+      return ResultSchema.array().parse(data satisfies RpcData);
     } catch (cause) {
       if (cause instanceof ORPCError) throw cause;
       const error =

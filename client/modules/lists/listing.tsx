@@ -39,7 +39,6 @@ export default function ListOfListsScreen() {
         Новий список
       </Button>
       <Box sx={{display: 'inline-flex', gap: 2, flexWrap: 'wrap'}}>
-        {/* <MasonryContainer> */}
         {lists.map(({id, title, created_at, order /**, items */}) => (
           <ListCard
             key={id}
@@ -51,7 +50,6 @@ export default function ListOfListsScreen() {
             onRemove={removeList}
           />
         ))}
-        {/* </MasonryContainer> */}
       </Box>
     </Box>
   );

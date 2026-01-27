@@ -86,6 +86,7 @@ export type Database = {
           owner_id: string | null
           title: string
           updated_at: string | null
+          version: number
         }
         Insert: {
           created_at?: string
@@ -94,6 +95,7 @@ export type Database = {
           owner_id?: string | null
           title?: string
           updated_at?: string | null
+          version?: number
         }
         Update: {
           created_at?: string
@@ -102,6 +104,7 @@ export type Database = {
           owner_id?: string | null
           title?: string
           updated_at?: string | null
+          version?: number
         }
         Relationships: []
       }
@@ -128,6 +131,7 @@ export type Database = {
     CompositeTypes: {
       list_pushed: {
         id: string | null
+        version: number | null
         title: string | null
         order: number | null
         created_at: string | null
@@ -136,6 +140,7 @@ export type Database = {
       }
       list_synced: {
         id: string | null
+        version: number | null
         title: string | null
         order: number | null
         created_at: string | null

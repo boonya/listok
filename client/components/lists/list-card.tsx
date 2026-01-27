@@ -64,7 +64,7 @@ export default function ListCard({
             <DeleteIcon fontSize="inherit" />
           </IconButton>
           <List disablePadding>
-            {items.map(({id, title, price, currency}) => (
+            {items.map(({id, title /**, price, currency */}) => (
               <ListItem key={id} disableGutters disablePadding>
                 <ListItemText
                   primary={title}

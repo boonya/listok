@@ -2,6 +2,7 @@ import {Dexie, type EntityTable} from 'dexie';
 
 export type List = {
   id: ID;
+  version: number;
   title: string;
   created_at: Date;
   updated_at?: Date | null;
@@ -15,7 +16,7 @@ function getDBInstance() {
   };
 
   db.version(1).stores({
-    lists: '++&id',
+    lists: '++&id,version',
   });
 
   return db;

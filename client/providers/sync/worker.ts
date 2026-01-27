@@ -96,8 +96,8 @@ export class SyncManager {
   }
 
   private diff_changes<
-    L extends {id: ID; updated_at?: Date | null},
-    R extends {id: ID; updated_at: Date | null},
+    L extends {id: ID; version: number},
+    R extends {id: ID; version: number},
   >(local: L[], remote: R[]) {
     const localMap = new Map(local.map((i) => [i.id, i]));
 
@@ -111,9 +111,8 @@ export class SyncManager {
     const created = remote.filter(({id}) => createdIds.has(id));
     const updated = remote
       .filter(
-        ({id, updated_at}) =>
-          updatedIds.has(id) &&
-          updated_at?.getTime() !== localMap.get(id)?.updated_at?.getTime(),
+        ({id, version}) =>
+          updatedIds.has(id) && version !== localMap.get(id)?.version,
       )
       .map(({id, ...changes}) => ({key: id, changes}));
 
