@@ -9,11 +9,11 @@ export function useSyncStatusEvents(onChange: OnChange) {
   useEffect(() => {
     const controller = new AbortController();
 
-    const throttledHandler = throttle(onChange, {
-      wait: 500,
-      leading: false,
-      trailing: true,
-    });
+    // const throttledHandler = throttle(onChange, {
+    //   wait: 500,
+    //   leading: false,
+    //   trailing: true,
+    // });
 
     // // TODO: Make truly type-safe messages
     // syncManagerWorker.addEventListener(

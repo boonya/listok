@@ -9,7 +9,8 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!client/dev-dist",
+      "!**/dev-dist",
+      "!**/dist",
       "!**/build",
       "!**/coverage",
       "!msw/public/mockServiceWorker.js",

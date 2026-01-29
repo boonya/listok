@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@listock/server/router": ["../server/dist/router/index.d.ts"]
     },
     "outDir": "build",
     "target": "ESNext",

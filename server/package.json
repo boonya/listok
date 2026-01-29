@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "main": "./index.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     "import": {
       "types": "./build/index.d.mts",
@@ -12,7 +13,8 @@
   "scripts": {
     "dev": "tsx watch --clear-screen=false --env-file=.env.local ./index.ts",
     "build": "pkgroll --clean-dist --srcdist .:build --env.REVISION=${REVISION} --sourcemap",
-    "types": "tsc --noEmit",
+    "types": "tsc --outDir dist",
+    "pretypes": "rm -rf dist",
     "test": "vitest --config ./vitest.config.ts"
   },
   "dependencies": {

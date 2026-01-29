@@ -28,8 +28,8 @@ biome.json
 # build artifacts
 **/*.tsbuildinfo
 **/build/
-**/dev-dist
 **/dist
+**/dev-dist
 
 **/Dockerfile
 supabase/
