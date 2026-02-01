@@ -1,0 +1,27 @@
+name: listok
+
+services:
+  server:
+    container_name: listok-server
+    image: ghcr.io/boonya/listok-server:latest
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+      args:
+        - REVISION=local-docker
+    ports:
+      - 31235:31235
+    env_file: ./server/.env.docker.local
+
+  client:
+    container_name: listok-client
+    image: ghcr.io/boonya/listok-client:latest
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+      args:
+        - REVISION=local-docker
+    ports:
+      - 31234:31234
+    environment:
+      - API_URL=http://localhost:31235
