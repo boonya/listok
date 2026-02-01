@@ -58,7 +58,7 @@ jobs:
           SERVER_TAG: ${{ inputs.SERVER_tag }}
 
         with:
-          project_id: ${{ vars.DO_PROJECT_ID }}
+          # project_id: ${{ vars.DO_PROJECT_ID }}
           # https://www.digitalocean.com/community/tech-talks/defining-your-app-specification-on-digitalocean-app-platform
           # https://docs.digitalocean.com/glossary/app-spec/
           app_spec_location: .do/${{ inputs.environment }}.yml

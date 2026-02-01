@@ -19,7 +19,7 @@ ingress:
     match:
       path:
         prefix: /
-name: starfish-app
+name: listok-production
 region: fra
 services:
 - envs:
