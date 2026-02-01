@@ -9,14 +9,13 @@ All of them are listed in `.env.sample`. To start local app you have to define t
 ### Build
 
 ```sh
-REVISION=$(date '+%Y.%m.%d-%H.%M.%S')
-docker build --build-arg REVISION=${REVISION} -t boonya/listok-client:${REVISION} -t boonya/listok-client:latest -f ./client/Dockerfile .
+docker build --build-arg REVISION=local -t ghcr.io/boonya/listok-client:local -f ./client/Dockerfile .
 ```
 
 ### Run
 
 ```sh
-docker run --rm -p 31234:31234 -e API_URL=http://localhost:31235 boonya/listok-client:latest
+docker run --rm -p 31234:31234 -e API_URL=http://localhost:31235 ghcr.io/boonya/listok-client:local
 ```
 
 Open [http://localhost:31234/]
