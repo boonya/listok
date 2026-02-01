@@ -37,7 +37,7 @@ jobs:
 
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ vars.APP_URL }}
+      url: https://${{ vars.PUBLIC_DOMAIN }}/
 
     concurrency: ${{ inputs.environment }}
 
@@ -46,7 +46,8 @@ jobs:
       - name: Deploy the app
         uses: digitalocean/app_action/deploy@v2
         env:
-          APP_HOSTNAME: ${{ vars.APP_HOSTNAME }}
+          PUBLIC_DOMAIN: ${{ vars.PUBLIC_DOMAIN }}
+          API_URL: ${{ vars.API_URL }}
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           GHCR_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}

@@ -4,7 +4,7 @@ alerts:
 features:
 - buildpack-stack=ubuntu-22
 domains:
-  - domain: ${APP_HOSTNAME}
+  - domain: ${PUBLIC_DOMAIN}
     type: PRIMARY
 ingress:
   rules:
