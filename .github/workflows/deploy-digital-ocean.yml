@@ -1,0 +1,53 @@
+name: Deploy Digital Ocean App Platform
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        type: choice
+        options:
+          - production
+        required: true
+      tag:
+        description: "Image tag to deploy"
+        type: string
+        required: true
+        default: latest
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ vars.APP_URL }}
+
+    concurrency: ${{ inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy the app
+        uses: digitalocean/app_action/deploy@v2
+        env:
+          APP_HOSTNAME: ${{ vars.APP_HOSTNAME }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          GHCR_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          TAG: ${{ inputs.tag }}
+        with:
+          project_id: ${{ vars.DO_PROJECT_ID }}
+          # https://www.digitalocean.com/community/tech-talks/defining-your-app-specification-on-digitalocean-app-platform
+          # https://docs.digitalocean.com/glossary/app-spec/
+          app_spec_location: .do/${{ inputs.environment }}.yml
+          token: ${{ secrets.DO_API_TOKEN }}
+

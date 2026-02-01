@@ -15,17 +15,17 @@ concurrency:
 jobs:
 
   biome:
-    uses: ./.github/workflows/biome.yml
+    uses: ./.github/workflows/verify-biome.yml
     secrets: inherit
 
   types:
-    uses: ./.github/workflows/types.yml
+    uses: ./.github/workflows/verify-types.yml
     secrets: inherit
 
-  testing:
-    uses: ./.github/workflows/testing.yml
+  tests:
+    uses: ./.github/workflows/verify-tests.yml
     secrets: inherit
 
   build:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/verify-build.yml
     secrets: inherit

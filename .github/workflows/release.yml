@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# env:
+#   supabase: production
+#   digitalocean: production
+
+jobs:
+  build:
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
+
+  deploy-supabase:
+    needs:
+      - build
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      supabase: production
+      digitalocean: production

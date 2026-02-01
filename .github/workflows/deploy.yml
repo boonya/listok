@@ -1,0 +1,41 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      supabase:
+        type: string
+        required: true
+      digitalocean:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      supabase:
+        description: "Supabase env. to deploy"
+        type: choice
+        options:
+          - production
+        required: true
+      digitalocean:
+        description: "Digital Ocean env. to deploy"
+        type: choice
+        options:
+          - production
+        required: true
+
+jobs:
+  supabase:
+    uses: ./.github/workflows/deploy-supabase.yml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.supabase }}
+
+  digital-ocean:
+    needs:
+      - supabase
+    uses: ./.github/workflows/deploy-digital-ocean.yml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.digitalocean }}
+      tag: ${{ github.ref_name }}

@@ -1,0 +1,14 @@
+name: Publish packages
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-client-docker:
+    uses: ./.github/workflows/build-client-docker.yml
+    secrets: inherit
+
+  build-server-docker:
+    uses: ./.github/workflows/build-server-docker.yml
+    secrets: inherit

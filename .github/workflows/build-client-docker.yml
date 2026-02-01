@@ -4,22 +4,19 @@ on:
   workflow_call:
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 env:
   REGISTRY: ghcr.io
   IMAGE: ghcr.io/${{ github.repository }}-client
 
 jobs:
-  docker:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          # - ubuntu-24.04-arm
+  build:
+    runs-on: ubuntu-latest
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   matrix:
+    #     os:
+    #       - ubuntu-latest
+    #       - ubuntu-24.04-arm
 
     steps:
       - uses: actions/checkout@v4
@@ -52,13 +49,13 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          # username: ${{ github.repository_owner }}
           password: ${{ github.token }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          platforms: ${{ runner.arch == 'ARM64' && 'linux/arm64' || 'linux/amd64' }}
+          platforms: linux/amd64
+          # platforms: ${{ runner.arch == 'ARM64' && 'linux/arm64' || 'linux/amd64' }}
           push: true
           file: client/Dockerfile
           build-args: |

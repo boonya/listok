@@ -1,4 +1,4 @@
-name: Deploy Supabase Migrations
+name: Deploy Supabase
 
 on:
   workflow_call:
@@ -9,13 +9,14 @@ on:
   workflow_dispatch:
     inputs:
       environment:
+        description: "Environment to deploy"
         type: choice
         options:
           - production
         required: true
 
 jobs:
-  db-push:
+  migrations:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
@@ -36,3 +37,10 @@ jobs:
         run: npx supabase migrations list
       - name: "Deploy migrations."
         run: npx supabase db push
+
+  # edge-functions:
+  #   needs: migrations
+  #   uses: ./.github/workflows/edge-functions.yml
+  #   secrets: inherit
+  #   with:
+  #     environment: ${{ inputs.environment }}

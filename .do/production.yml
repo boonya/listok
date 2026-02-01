@@ -1,0 +1,54 @@
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+features:
+- buildpack-stack=ubuntu-22
+domains:
+  - domain: ${APP_HOSTNAME}
+    type: PRIMARY
+ingress:
+  rules:
+  - component:
+      name: server
+    match:
+      path:
+        prefix: /api
+  - component:
+      name: client
+    match:
+      path:
+        prefix: /
+name: starfish-app
+region: fra
+services:
+- envs:
+  - key: SUPABASE_URL
+    scope: RUN_TIME
+    value: ${SUPABASE_URL}
+  - key: SUPABASE_ANON_KEY
+    scope: RUN_TIME
+    type: SECRET
+    value: ${SUPABASE_ANON_KEY}
+  name: server
+  http_port: 31235
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  instance_count: 1
+  image:
+    registry_type: GHCR
+    registry: ${OWNER}
+    registry_credentials: ${OWNER}:${GHCR_TOKEN}
+    repository: listock-server
+    tag: ${TAG}
+- envs:
+  - key: API_URL
+    scope: RUN_TIME
+    value: ${API_URL}
+  name: client
+  http_port: 31234
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  instance_count: 1
+  image:
+    registry: boonya
+    registry_type: GHCR
+    repository: listock-client
+    tag: main

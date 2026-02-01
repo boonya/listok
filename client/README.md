@@ -16,7 +16,7 @@ docker build --build-arg REVISION=${REVISION} -t boonya/listock-client:${REVISIO
 ### Run
 
 ```sh
-docker run --rm -p 31234:80 -e API_URL=http://localhost:31235 boonya/listock-client:latest
+docker run --rm -p 31234:31234 -e API_URL=http://localhost:31235 boonya/listock-client:latest
 ```
 
 Open [http://localhost:31234/]
