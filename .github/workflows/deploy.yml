@@ -9,6 +9,16 @@ on:
       digitalocean:
         type: string
         required: true
+      client_tag:
+        description: "Client Image tag to deploy"
+        type: string
+        required: true
+        default: ${{ github.ref_name }}
+      server_tag:
+        description: "Server Image tag to deploy"
+        type: string
+        required: true
+        default: ${{ github.ref_name }}
   workflow_dispatch:
     inputs:
       supabase:
@@ -23,6 +33,16 @@ on:
         options:
           - production
         required: true
+      client_tag:
+        description: "Client Image tag to deploy"
+        type: string
+        required: true
+        default: latest
+      server_tag:
+        description: "Server Image tag to deploy"
+        type: string
+        required: true
+        default: latest
 
 jobs:
   supabase:
@@ -38,4 +58,6 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.digitalocean }}
-      tag: ${{ github.ref_name }}
+      client_tag: ${{ inputs.client_tag }}
+      server_tag: ${{ inputs.server_tag }}
+

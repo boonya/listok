@@ -37,8 +37,8 @@ services:
     registry_type: GHCR
     registry: ${OWNER}
     registry_credentials: ${OWNER}:${GHCR_TOKEN}
-    repository: listok-server
-    tag: ${TAG}
+    repository: ${SERVER_REPO}
+    tag: ${SERVER_TAG}
 - envs:
   - key: API_URL
     scope: RUN_TIME
@@ -48,7 +48,8 @@ services:
   instance_size_slug: apps-s-1vcpu-0.5gb
   instance_count: 1
   image:
-    registry: boonya
     registry_type: GHCR
-    repository: listok-client
-    tag: main
+    registry: ${OWNER}
+    registry_credentials: ${OWNER}:${GHCR_TOKEN}
+    repository: ${CLIENT_REPO}
+    tag: ${CLIENT_TAG}

@@ -6,7 +6,10 @@ on:
       environment:
         type: string
         required: true
-      tag:
+      client_tag:
+        type: string
+        required: true
+      server_tag:
         type: string
         required: true
   workflow_dispatch:
@@ -17,8 +20,13 @@ on:
         options:
           - production
         required: true
-      tag:
-        description: "Image tag to deploy"
+      client_tag:
+        description: "Client Image tag to deploy"
+        type: string
+        required: true
+        default: latest
+      server_tag:
+        description: "Server Image tag to deploy"
         type: string
         required: true
         default: latest
@@ -43,7 +51,11 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           GHCR_TOKEN: ${{ secrets.GHCR_READ_TOKEN }}
           OWNER: ${{ github.repository_owner }}
-          TAG: ${{ inputs.tag }}
+          CLIENT_REPO: listok-client
+          CLIENT_TAG: ${{ inputs.client_tag }}
+          SERVER_REPO: listok-server
+          SERVER_TAG: ${{ inputs.SERVER_tag }}
+
         with:
           project_id: ${{ vars.DO_PROJECT_ID }}
           # https://www.digitalocean.com/community/tech-talks/defining-your-app-specification-on-digitalocean-app-platform

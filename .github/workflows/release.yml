@@ -27,3 +27,5 @@ jobs:
     with:
       supabase: production
       digitalocean: production
+      client_tag: ${{ github.ref_name }}
+      server_tag: ${{ github.ref_name }}
