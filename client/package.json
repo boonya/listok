@@ -1,12 +1,12 @@
 {
-  "name": "@listock/client",
+  "name": "@listok/client",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "REVISION=${REVISION} vite build",
     "types": "tsc --noEmit",
-    "pretypes": "npm run types -w @listock/server",
+    "pretypes": "npm run types -w @listok/server",
     "test": "vitest --config ./vitest.config.ts"
   },
   "dependencies": {
@@ -50,8 +50,8 @@
     "vite-tsconfig-paths": "^6.0.4"
   },
   "peerDependencies": {
-    "@listock/server": "*",
-    "@listock/tests": "*",
+    "@listok/server": "*",
+    "@listok/tests": "*",
     "msw": "^2.11.2"
   }
 }

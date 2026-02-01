@@ -1,5 +1,5 @@
 {
-  "name": "@listock/supabase",
+  "name": "@listok/supabase",
   "scripts": {
     "dev": "source .env.local && supabase start",
     "types": "supabase gen types typescript --local > database.d.ts",

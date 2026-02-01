@@ -1,4 +1,4 @@
-# listock Project
+# listok Project
 
 ## Env variables
 
@@ -14,11 +14,11 @@ cp .env.sample .env.local`
 
 ```sh
 REVISION=$(date '+%Y.%m.%d-%H.%M.%S')
-docker build --build-arg REVISION=${REVISION} -t boonya/listock:${REVISION} -t boonya/listock:latest .
+docker build --build-arg REVISION=${REVISION} -t boonya/listok:${REVISION} -t boonya/listok:latest .
 ```
 
 ### Run
 
 ```sh
-docker run --rm -p 3000:3000 --env-file=.env.docker.local boonya/listock:latest
+docker run --rm -p 3000:3000 --env-file=.env.docker.local boonya/listok:latest
 ```

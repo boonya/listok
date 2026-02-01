@@ -1,4 +1,4 @@
-import type {OrpcClient as ApiClient} from '@listock/server/router';
+import type {OrpcClient as ApiClient} from '@listok/server/router';
 import {
   createORPCClient,
   ORPCError,

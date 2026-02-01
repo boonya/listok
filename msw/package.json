@@ -1,5 +1,5 @@
 {
-  "name": "@listock/msw",
+  "name": "@listok/msw",
   "dependencies": {
     "msw": "^2.12.7"
   },

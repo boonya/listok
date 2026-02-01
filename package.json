@@ -1,14 +1,14 @@
 {
-  "name": "@listock/monorepo",
+  "name": "@listok/monorepo",
   "type": "module",
   "version": "1.0.0",
   "license": "GPL-3.0",
   "private": true,
   "author": "Serhii <boonya> Buinytskyi",
   "keywords": ["list", "keep", "notes", "accounting"],
-  "repository": "https://github.com/boonya/listock",
-  "bugs": "https://github.com/boonya/listock/issues",
-  "homepage": "https://github.com/boonya/listock#readme",
+  "repository": "https://github.com/boonya/listok",
+  "bugs": "https://github.com/boonya/listok/issues",
+  "homepage": "https://github.com/boonya/listok#readme",
   "engines": {
     "npm": "~11.6.2",
     "node": "~24.12.0"

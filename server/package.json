@@ -1,5 +1,5 @@
 {
-  "name": "@listock/server",
+  "name": "@listok/server",
   "version": "1.0.0",
   "type": "module",
   "main": "./index.ts",
@@ -27,7 +27,7 @@
     "tsx": "^4.21.0"
   },
   "peerDependencies": {
-    "@listock/supabase": "*",
-    "@listock/tests": "*"
+    "@listok/supabase": "*",
+    "@listok/tests": "*"
   }
 }

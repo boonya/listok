@@ -1,4 +1,4 @@
-import type {Database} from '@listock/supabase/database.d.ts';
+import type {Database} from '@listok/supabase/database.d.ts';
 import {ORPCError, os} from '@orpc/server';
 import {createClient, PostgrestError} from '@supabase/supabase-js';
 import getEnvs from '@/env';

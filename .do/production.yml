@@ -37,7 +37,7 @@ services:
     registry_type: GHCR
     registry: ${OWNER}
     registry_credentials: ${OWNER}:${GHCR_TOKEN}
-    repository: listock-server
+    repository: listok-server
     tag: ${TAG}
 - envs:
   - key: API_URL
@@ -50,5 +50,5 @@ services:
   image:
     registry: boonya
     registry_type: GHCR
-    repository: listock-client
+    repository: listok-client
     tag: main
