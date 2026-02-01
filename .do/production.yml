@@ -15,6 +15,7 @@ ingress:
         prefix: /api
   - component:
       name: client
+      rewrite: /
     match:
       path:
         prefix: /
