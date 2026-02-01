@@ -52,8 +52,6 @@ jobs:
       environment: ${{ inputs.supabase }}
 
   digital-ocean:
-    needs:
-      - supabase
     uses: ./.github/workflows/deploy-digital-ocean.yml
     secrets: inherit
     with:
