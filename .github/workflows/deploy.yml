@@ -13,12 +13,10 @@ on:
         description: "Client Image tag to deploy"
         type: string
         required: true
-        default: ${{ github.ref_name }}
       server_tag:
         description: "Server Image tag to deploy"
         type: string
         required: true
-        default: ${{ github.ref_name }}
   workflow_dispatch:
     inputs:
       supabase:
